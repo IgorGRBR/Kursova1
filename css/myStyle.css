@@ -1,0 +1,126 @@
+* {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        vertical-align: baseline;
+        -background: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+body {
+    color: #000;
+    font-family: Monospace;
+    font-size: 13px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #fff;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.prj{
+    color:#000;
+    text-align: left;
+    position: absolute;
+    top: 0px; 
+    width: 25%;
+    height: 100%;
+    padding: 5px;
+    background-color: white;
+}
+
+.uielem{
+    text-align: left;
+    font-size: 20px;
+    color:#000;
+    position: absolute;
+    padding: 0px;
+    background-color: black;
+}
+
+.btn{
+    text-align: middle;
+    color: white;
+    background-color: gray;
+    outline-width: 2px;
+    outline-color: black;
+    display: block;
+    float: left;
+    margin-right: 0px;
+    padding-right: 4px;
+    padding-left: 4px;
+    cursor: pointer;
+}
+
+.btn:hover{
+    color: black;
+    background-color: white;
+}
+
+.dropdown{
+    background-color: black;
+    position: absolute;
+    text-align: left;
+    z-index: 4;
+}
+
+.btn2{
+    text-align: left;
+    color: white;
+    background-color: gray;
+    outline-width: 2px;
+    outline-color: black;
+    display: block;
+    float: bottom;
+    padding-right: 4px;
+    padding-left: 4px;
+    cursor: pointer;
+}
+.btn2:hover{
+    color: black;
+    background-color: white;
+}
+
+.prop_window{
+    color: white;
+    background-color: black;
+    margin: 8px;
+    outline: dashed;
+    outline-width: 2px;
+    outline-color: white;
+    cursor: move;
+}
+
+.prop_inp{
+    width: 40px;
+    display: block;
+    float: right;
+    text-align: left;
+    outline-width: 2px;
+    outline-color: gray;
+    margin-right: 4px;
+    margin-left: 4px;
+    background-color: white;
+}
+
+.std_inp{
+    width: 240px;
+    display: block;
+    float: right;
+    text-align: left;
+    outline-width: 2px;
+    outline-color: gray;
+    margin-top: 3px;
+    margin-right: 4px;
+    margin-left: 4px;
+    background-color: white;
+}
+
+.canv{
+}

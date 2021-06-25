@@ -1,0 +1,162 @@
+<html lang="en">
+    <head>
+        <title>D_Twin Web Interface</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    </head>
+    <body ontouchstart="" onclick="globalClick();">
+        <--Following objects are elements of internal system-->
+        <input id="file-input" type="file" name="name" style="display: none;" />
+        
+        <link href="css/myStyle.css" rel="stylesheet" />
+        <script src="js/dropdown.js"></script>
+        <div id="top_panel" class="uielem" style="top: 0px; left: 0px; height: 3%; width: 100%;">
+            <div id="file_btn" class="btn" onclick="ddOnClick('file_btn', 'file_btn_menu');">File</div>
+            <div id="edit_btn" class="btn" onclick="ddOnClick('edit_btn', 'edit_btn_menu');">Edit</div>
+            <div id="input_btn" class="btn" onclick="ddOnClick('input_btn', 'input_btn_menu');">Input</div>
+            <div id="scene_btn" class="btn" onclick="ddOnClick('scene_btn', 'scene_btn_menu');">Scene</div>
+            <div id="view_btn" class="btn" onclick="ddOnClick('view_btn', 'view_btn_menu');">View</div>
+        </div>
+        <div id="file_btn_menu" class="uielem dropdown" style="visibility: hidden;">
+            <div onclick="ddClear('file_btn_menu');clearScene();" class="btn2">New</div>
+            <div onclick="ddClear('file_btn_menu');file_input_type = 0; document.getElementById('file-input').click();" class="btn2">Open</div>
+            <div onclick="ddClear('file_btn_menu');" class="btn2">Save</div>
+            <div onclick="ddClear('file_btn_menu');" class="btn2">Export</div>
+        </div>
+        <div id="input_btn_menu" class="uielem dropdown" style="visibility: hidden;">
+            <div onclick="ddClear('input_btn_menu');setVisible(1);" class="btn2">Configure...</div>
+        </div>
+        <div id="edit_btn_menu" class="uielem dropdown" style="visibility: hidden;">
+            <div onclick="ddClear('edit_btn_menu'); edit_mode = 0;" class="btn2">Select</div>
+            <div onclick="ddClear('edit_btn_menu'); edit_mode = 1;" class="btn2">Insert</div>
+            <div onclick="ddClear('edit_btn_menu'); edit_mode = 2;" class="btn2">Delete</div>
+            <div onclick="ddClear('edit_btn_menu'); edit_mode = 3;" class="btn2">Move</div>
+            <div onclick="ddClear('edit_btn_menu'); edit_mode = 4;" class="btn2">Rotate</div>
+            <div onclick="ddClear('edit_btn_menu'); edit_mode = 5;" class="btn2">Scale</div>
+        </div>
+        <div id="scene_btn_menu" class="uielem dropdown" style="visibility: hidden;">
+            <div onclick="ddClear('scene_btn_menu'); file_input_type = 1; document.getElementById('file-input').click();
+" class="btn2">Load OBJ model</div>
+            <div onclick="ddClear('scene_btn_menu'); file_input_type = 2; document.getElementById('file-input').click();
+" class="btn2">Load MTL material</div>
+            <div onclick="ddClear('scene_btn_menu');" class="btn2">Model properties</div>
+            <div onclick="ddClear('scene_btn_menu');" class="btn2">Clear</div>
+        </div>
+        
+        <div id="view_btn_menu" class="uielem dropdown" style="visibility: hidden;">
+            <div onclick="ddClear('view_btn_menu');" class="btn2">Tools bar</div>
+            <div onclick="ddClear('view_btn_menu'); alignAlongAxis(0);" class="btn2">Align camera along X</div>
+            <div onclick="ddClear('view_btn_menu'); alignAlongAxis(1);" class="btn2">Align camera along Y</div>
+            <div onclick="ddClear('view_btn_menu'); alignAlongAxis(2);" class="btn2">Align camera along Z</div>
+        </div>
+        
+        <div id="tools_panel" class="uielem" style="left: 2%; width: 64px; top:10%; visibility: hidden;">
+        Hi!
+        </div>
+        
+        <div id="variable_list_window" class="uielem prop_window" style="left: 2%; width: 256px; top:10%; visibility: hidden;">
+            <h3> Input variables: </h3>
+            <div id="var_list"></div>
+            <div id="add_variable" class="btn" onclick="addVariable();updateVariableList();">Add variable</div>
+            <div class="btn" onclick="setVisible(0);">Close</div>
+        </div>
+        
+        <div id="variable_window" class="uielem prop_window" style="left: 20%; width: 320px; top:10%; visibility: hidden;">
+            <h3> Variable properties: </h3>
+            Name: <input type="text" id="var_name" class="std_inp" onchange="updateVariable(selected_var);"></input>
+            <br>
+            Value: <input type="text" id="var_value" class="std_inp" onchange="updateVariable(selected_var);"></input>
+            <br>
+            <div class="btn" onclick="this.parentElement.style.visibility='hidden';" style="float: right;">Done</div>
+            <div class="btn" onclick="this.parentElement.style.visibility='hidden';removeVariable();">Remove</div>
+        </div>
+        
+        <div id="state_list_window" class="uielem prop_window" style="left: 2%; width: 256px; top:10%; visibility: hidden;">
+            <h3> Component states: </h3>
+            <div id="state_list"></div>
+            <div class="btn" onclick="addState(); updateStateList();">Add state</div>
+            <div class="btn" onclick="setStateListVisible(0);">Close</div>
+        </div>
+        
+        <div id="state_configuration_window" class="uielem prop_window" style="left: 20%; width: 320px; top:10%; visibility: hidden;">
+            <h3> State properties: </h3>
+            Name: <input type="text" id="state_name" class="std_inp" onchange="updateState(selected_state);"></input>
+            <br>
+            Predicate: <input type="text" id="state_value" class="std_inp" onchange="updateState(selected_state);"></input>
+            <br>
+            Action:  <div id="state_action" class="btn" onclick="document.getElementById('action_list_window').style.visibility = 'visible';updateActionList();" style="float: right;">None</div>
+            <br>
+            <div class="btn" onclick="this.parentElement.style.visibility='hidden';" style="float: right;">Done</div>
+            <div class="btn" onclick="this.parentElement.style.visibility='hidden';removeState();">Remove</div>
+        </div>
+        
+        <div id="action_list_window" class="uielem prop_window" style="left: 2%; width: 256px; top:10%; visibility: hidden;">
+            <h3> State actions: </h3>
+            <div id="action_list"></div>
+            <h3> Arguments: </h3>
+            <input type="text" id="arg2" class="prop_inp" onchange="updateAction();updateState(selected_state);"></input>
+            <input type="text" id="arg1" class="prop_inp" onchange="updateAction();updateState(selected_state);"></input>
+            <input type="text" id="arg0" class="prop_inp" onchange="updateAction();updateState(selected_state);"></input>
+            <div class="btn" onclick="this.parentElement.style.visibility='hidden';updateState(selected_state);">Close</div>
+        </div>
+        
+        <div id="properties_window" class="uielem prop_window" style="left: 80%; width: 20%; top:10%; visibility: hidden;">
+            <h3>Properties:</h3><br>
+            <div id="prop_w_scene_object" style="visibility: hidden;">
+                Position: 
+                <input type="text" id="i_pos_z" class="prop_inp" onchange="updateScObjProp();"></input>
+                <input type="text" id="i_pos_y" class="prop_inp" onchange="updateScObjProp();"></input>
+                <input type="text" id="i_pos_x" class="prop_inp" onchange="updateScObjProp();"></input>
+                Rotation: 
+                <input type="text" id="i_rot_z" class="prop_inp" onchange="updateScObjProp();"></input>
+                <input type="text" id="i_rot_y" class="prop_inp" onchange="updateScObjProp();"></input>
+                <input type="text" id="i_rot_x" class="prop_inp" onchange="updateScObjProp();"></input>
+                Scale: 
+                <input type="text" id="i_sca_z" class="prop_inp" onchange="updateScObjProp();"></input>
+                <input type="text" id="i_sca_y" class="prop_inp" onchange="updateScObjProp();"></input>
+                <input type="text" id="i_sca_x" class="prop_inp" onchange="updateScObjProp();"></input>
+                <div id="edit_states_btn" class="btn2" onclick="setStateListVisible(1); updateStateList();">Edit states</div>
+            </div>
+        </div>
+        <script src="js/draggable.js"></script>
+        
+        <div id="canvas" class="canv"></div> 
+        
+        
+        <script src="js/lib/three.js"></script>
+        <script src="js/lib/Detector.js"></script>
+        <script src="js/lib/controls/OrbitControls.js"></script>
+        <script src="js/lib/controls/EditorControls.js"></script>
+        <script src="js/lib/loaders/MTLLoader.js"></script>
+		<script src="js/lib/loaders/OBJLoader.js"></script>
+        <script src="js/globalVariables.js"></script>
+        <script src="js/stateActions.js"></script>
+        <script src="js/objectState.js"></script>
+        <script src="js/sceneObject.js"></script>
+        <script src="js/cameraExtra.js"></script>
+        <script src="js/main.js"></script>
+        
+        <script src="js/sceneObjectProperties.js"></script>
+        <script>
+            if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+            
+            //Make draggable elements draggable
+            var elmnt = document.getElementsByClassName('prop_window');
+            for (var i = 0; i<elmnt.length; i++)
+            {
+                dragElement(elmnt[i]);
+            }
+            //All input properties should auto-update
+            elmnt = document.getElementsByClassName('prop_inp');
+            for (var i = 0; i<elmnt.length; i++)
+            {
+                elmnt[i].onchange = updateScObjProp;
+            }
+            run();
+            console.log('Everything loaded fine');
+        </script>
+        
+        
+        <script src="js/editMode.js"></script>
+    </body>
+</html>
